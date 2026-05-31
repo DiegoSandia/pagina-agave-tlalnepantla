@@ -149,7 +149,7 @@
 </nav>
 
 <!-- HERO -->
-<section id="inicio" class="hero-bg min-h-screen flex items-center justify-center px-4 pt-20 pb-12 relative">
+<section id="inicio" class="hero-bg min-h-screen flex items-center justify-center px-4 pt-16 pb-10 relative">
   <!-- Video background -->
   <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" style="opacity:0.22;">
     <source src="assets/hero-video.mp4" type="video/mp4">
@@ -157,43 +157,43 @@
   <!-- Overlay oscuro sobre el video -->
   <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(10,7,6,0.55) 0%, rgba(10,7,6,0.30) 50%, rgba(10,7,6,0.75) 100%);"></div>
 
-  <div class="max-w-4xl mx-auto text-center relative z-10">
-    <img src="assets/logo-agave.png" alt="El Agave Birria & Cantaritos" class="h-44 sm:h-60 mx-auto mb-6 sm:mb-8" style="object-fit: contain; filter: drop-shadow(0 0 30px rgba(255, 107, 26, 0.4));" />
+  <div class="w-full max-w-4xl mx-auto text-center relative z-10">
+    <img src="assets/logo-agave.png" alt="El Agave Birria & Cantaritos" class="h-28 sm:h-48 md:h-60 mx-auto mb-4 sm:mb-6" style="object-fit: contain; filter: drop-shadow(0 0 30px rgba(255, 107, 26, 0.4));" />
 
-    <h1 class="font-display text-5xl sm:text-7xl md:text-8xl glow-amarillo neon-flicker mb-4 leading-none">
+    <h1 class="font-display text-4xl sm:text-6xl md:text-8xl glow-amarillo neon-flicker mb-3 leading-none">
       PRENDE<br/>LA NOCHE
     </h1>
 
-    <p class="font-condensed text-xl sm:text-2xl text-[#FF6B1A] glow-amarillo-soft mb-3 tracking-widest">
+    <p class="font-condensed text-base sm:text-xl md:text-2xl text-[#FF6B1A] glow-amarillo-soft mb-3 tracking-widest">
       BIRRIA & CANTARITOS
     </p>
 
-    <p class="text-[#F5E6C8]/80 max-w-xl mx-auto text-base sm:text-lg leading-relaxed mb-10">
-      Birria tatemada estilo Jalisco desde las 10 AM. Cantaritos en barro que prenden la mesa. Dos sucursales abiertas para que llegues con todos los tuyos.
+    <p class="text-[#F5E6C8]/80 max-w-sm sm:max-w-xl mx-auto text-sm sm:text-base leading-relaxed mb-7 px-2">
+      Birria estilo Jalisco desde las 10 AM. Dos sucursales abiertas para que llegues con todos los tuyos.
     </p>
 
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <a href="#reservar" class="font-condensed text-lg px-8 py-4 bg-[#FF6B1A] text-[#0A0706] rounded tracking-widest pulse-neon hover:scale-105 transition w-full sm:w-auto text-center">
+    <div class="flex flex-col sm:flex-row gap-3 justify-center items-center px-4 sm:px-0">
+      <a href="#reservar" class="font-condensed text-base sm:text-lg px-6 py-3 sm:py-4 bg-[#FF6B1A] text-[#0A0706] rounded tracking-widest pulse-neon hover:scale-105 transition w-full sm:w-auto text-center">
         RESERVAR MESA
       </a>
-      <a href="#menu" class="font-condensed text-lg px-8 py-4 border-2 border-[#FFB800] text-[#FFB800] rounded tracking-widest hover:bg-[#FFB800] hover:text-[#0A0706] transition w-full sm:w-auto text-center">
+      <a href="#menu" class="font-condensed text-base sm:text-lg px-6 py-3 sm:py-4 border-2 border-[#FFB800] text-[#FFB800] rounded tracking-widest hover:bg-[#FFB800] hover:text-[#0A0706] transition w-full sm:w-auto text-center">
         VER EL MENÚ
       </a>
     </div>
 
     <!-- Info rápida bajo el hero -->
-    <div class="mt-14 grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
-      <div class="bg-card rounded p-3">
+    <div class="mt-8 sm:mt-12 grid grid-cols-3 gap-2 sm:gap-4 max-w-sm sm:max-w-2xl mx-auto">
+      <div class="bg-card rounded p-2 sm:p-3">
         <p class="font-condensed text-[#FF6B1A] text-xs tracking-widest mb-1">HOY ABIERTO</p>
-        <p class="text-[#F5E6C8] text-sm" id="hoy-horario">10am – 11pm</p>
+        <p class="text-[#F5E6C8] text-xs sm:text-sm" id="hoy-horario">10am – 11pm</p>
       </div>
-      <div class="bg-card rounded p-3">
+      <div class="bg-card rounded p-2 sm:p-3">
         <p class="font-condensed text-[#FF6B1A] text-xs tracking-widest mb-1">2X1 EN COPEO</p>
-        <p class="text-[#F5E6C8] text-sm">Todos los días</p>
+        <p class="text-[#F5E6C8] text-xs sm:text-sm">Todos los días</p>
       </div>
-      <div class="bg-card rounded p-3 col-span-2 sm:col-span-1">
+      <div class="bg-card rounded p-2 sm:p-3">
         <p class="font-condensed text-[#FF6B1A] text-xs tracking-widest mb-1">SUCURSALES</p>
-        <p class="text-[#F5E6C8] text-sm">2 en Tlalnepantla</p>
+        <p class="text-[#F5E6C8] text-xs sm:text-sm">2 en Tlalnepantla</p>
       </div>
     </div>
   </div>
@@ -250,35 +250,46 @@
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">LO QUE TENEMOS</p>
-      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider mb-6">QUÉ HAY PARA HOY</h2>
-      <!-- Categorías -->
-      <div class="flex flex-wrap justify-center gap-3 mb-2">
-        <span class="font-condensed px-4 py-2 bg-card border border-[#4A2C1A] text-[#F5E6C8] rounded tracking-widest text-sm">COMIDAS</span>
-        <span class="font-condensed px-4 py-2 bg-card border border-[#4A2C1A] text-[#F5E6C8] rounded tracking-widest text-sm">BEBIDAS</span>
-        <span class="font-condensed px-4 py-2 bg-card border border-[#4A2C1A] text-[#F5E6C8] rounded tracking-widest text-sm">DESAYUNOS</span>
-      </div>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider">QUÉ HAY PARA HOY</h2>
     </div>
 
-    <!-- 3 fotos -->
+    <!-- 3 fotos con etiqueta encima -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-10">
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/cantarito.png','Cantarito Cazuela')">
+
+      <div class="menu-card rounded overflow-hidden relative" onclick="openLightbox('assets/cantarito.png','Cantarito Cazuela')">
         <div class="aspect-[4/3] overflow-hidden">
           <img src="assets/cantarito.png" alt="Cantarito Cazuela" class="w-full h-full object-cover" />
         </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-3">CANTARITO CAZUELA</p>
+        <!-- Overlay degradado + etiqueta -->
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, rgba(10,7,6,0.85) 0%, transparent 50%);"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-4">
+          <p class="font-condensed text-[#FF6B1A] tracking-widest text-xs mb-1">BEBIDAS</p>
+          <p class="font-condensed text-[#F5E6C8] tracking-wider text-lg leading-none">CANTARITO CAZUELA</p>
+        </div>
       </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/birria.png','Birria estilo Jalisco')">
+
+      <div class="menu-card rounded overflow-hidden relative" onclick="openLightbox('assets/birria.png','Birria estilo Jalisco')">
         <div class="aspect-[4/3] overflow-hidden">
           <img src="assets/birria.png" alt="Birria estilo Jalisco" class="w-full h-full object-cover" />
         </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-3">BIRRIA ESTILO JALISCO</p>
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, rgba(10,7,6,0.85) 0%, transparent 50%);"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-4">
+          <p class="font-condensed text-[#FF6B1A] tracking-widest text-xs mb-1">COMIDAS</p>
+          <p class="font-condensed text-[#F5E6C8] tracking-wider text-lg leading-none">BIRRIA ESTILO JALISCO</p>
+        </div>
       </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/chilaquiles.png','Chilaquiles')">
+
+      <div class="menu-card rounded overflow-hidden relative" onclick="openLightbox('assets/chilaquiles.png','Chilaquiles')">
         <div class="aspect-[4/3] overflow-hidden">
           <img src="assets/chilaquiles.png" alt="Chilaquiles con pollo" class="w-full h-full object-cover" />
         </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-3">CHILAQUILES</p>
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, rgba(10,7,6,0.85) 0%, transparent 50%);"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-4">
+          <p class="font-condensed text-[#FF6B1A] tracking-widest text-xs mb-1">DESAYUNOS</p>
+          <p class="font-condensed text-[#F5E6C8] tracking-wider text-lg leading-none">CHILAQUILES</p>
+        </div>
       </div>
+
     </div>
 
     <!-- Aviso menú digital -->
