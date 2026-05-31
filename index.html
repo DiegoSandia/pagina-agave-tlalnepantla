@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>El Agave — Birria & Cantaritos · Tlalnepantla</title>
+<meta name="description" content="Birria tatemada estilo Jalisco y cantaritos en barro. 2 sucursales en Tlalnepantla. Reserva tu mesa por WhatsApp." />
+
+<!-- Open Graph -->
+<meta property="og:title" content="El Agave — Birria & Cantaritos" />
+<meta property="og:description" content="Prende la noche. Birria que abraza, cantaritos que prenden." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/logo-agave.png" />
+
+<link rel="icon" type="image/png" href="assets/logo-agave.png" />
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Monoton&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --amarillo-neon: #FFB800;
+    --naranja-neon: #FF6B1A;
+    --rojo-fuego: #E53E0C;
+    --crema: #F5E6C8;
+    --negro-noche: #0A0706;
+    --madera-oscura: #2A1810;
+    --madera-media: #4A2C1A;
+    --humo: #8A7866;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--negro-noche);
+    color: var(--crema);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  .font-display { font-family: 'Monoton', cursive; }
+  .font-condensed { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.06em; }
+
+  .glow-amarillo {
+    color: var(--amarillo-neon);
+    text-shadow: 0 0 7px #FFB800, 0 0 15px #FFB800, 0 0 40px #FF6B1A;
+  }
+  .glow-naranja {
+    color: var(--naranja-neon);
+    text-shadow: 0 0 7px #FF6B1A, 0 0 18px #FF6B1A, 0 0 40px #E53E0C;
+  }
+  .glow-amarillo-soft { text-shadow: 0 0 8px rgba(255, 184, 0, 0.6), 0 0 20px rgba(255, 107, 26, 0.3); }
+
+  /* Patrón sutil de madera para fondos */
+  .bg-madera {
+    background: linear-gradient(180deg, var(--madera-oscura) 0%, var(--negro-noche) 100%);
+  }
+  .bg-card {
+    background: linear-gradient(145deg, rgba(74, 44, 26, 0.4) 0%, rgba(42, 24, 16, 0.7) 100%);
+    border: 1px solid rgba(74, 44, 26, 0.8);
+  }
+
+  /* Animación de pulso neón para CTAs */
+  @keyframes pulse-neon {
+    0%, 100% { box-shadow: 0 0 12px rgba(255, 107, 26, 0.5), 0 0 30px rgba(255, 107, 26, 0.2); }
+    50% { box-shadow: 0 0 25px rgba(255, 107, 26, 0.8), 0 0 60px rgba(255, 184, 0, 0.4); }
+  }
+  .pulse-neon { animation: pulse-neon 2.5s ease-in-out infinite; }
+
+  /* Flicker sutil del título hero */
+  @keyframes flicker {
+    0%, 92%, 100% { opacity: 1; }
+    93% { opacity: 0.85; }
+    94% { opacity: 1; }
+    95% { opacity: 0.7; }
+    96% { opacity: 1; }
+  }
+  .neon-flicker { animation: flicker 6s infinite; }
+
+  /* Hero background con grano */
+  .hero-bg {
+    background:
+      radial-gradient(ellipse at top, rgba(255, 107, 26, 0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom, rgba(229, 62, 12, 0.12) 0%, transparent 55%),
+      var(--negro-noche);
+  }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Menú gallery */
+  .menu-card {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+    cursor: zoom-in;
+  }
+  .menu-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255, 107, 26, 0.25);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(10, 7, 6, 0.96);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100; padding: 1rem;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 95%; max-height: 95vh; object-fit: contain; }
+
+  /* Form inputs */
+  .form-input {
+    background: rgba(42, 24, 16, 0.5);
+    border: 1px solid var(--madera-media);
+    color: var(--crema);
+    transition: all 0.3s;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--naranja-neon);
+    box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.15);
+  }
+  .form-input::placeholder { color: var(--humo); }
+
+  /* Nav backdrop */
+  .nav-blur { backdrop-filter: blur(12px); background: rgba(10, 7, 6, 0.85); }
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-[#4A2C1A]/40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+    <a href="#inicio" class="flex items-center gap-2">
+      <img src="assets/logo-agave.png" alt="El Agave" class="h-10 w-auto" style="object-fit: contain;" />
+      <span class="font-condensed text-lg sm:text-xl text-[#F5E6C8] hidden sm:block">EL AGAVE</span>
+    </a>
+    <div class="flex items-center gap-1 sm:gap-3">
+      <a href="#menu" class="font-condensed text-sm px-3 py-2 text-[#F5E6C8] hover:text-[#FFB800] transition">MENÚ</a>
+      <a href="#sucursales" class="font-condensed text-sm px-3 py-2 text-[#F5E6C8] hover:text-[#FFB800] transition hidden sm:block">SUCURSALES</a>
+      <a href="#reservar" class="font-condensed text-sm px-4 py-2 bg-[#FF6B1A] text-[#0A0706] hover:bg-[#FFB800] transition rounded">RESERVAR</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="inicio" class="hero-bg min-h-screen flex items-center justify-center px-4 pt-20 pb-12 relative">
+  <div class="max-w-4xl mx-auto text-center">
+    <img src="assets/logo-agave.png" alt="El Agave Birria & Cantaritos" class="h-44 sm:h-60 mx-auto mb-6 sm:mb-8" style="object-fit: contain; filter: drop-shadow(0 0 30px rgba(255, 107, 26, 0.4));" />
+
+    <h1 class="font-display text-5xl sm:text-7xl md:text-8xl glow-amarillo neon-flicker mb-4 leading-none">
+      PRENDE<br/>LA NOCHE
+    </h1>
+
+    <p class="font-condensed text-xl sm:text-2xl text-[#FF6B1A] glow-amarillo-soft mb-3 tracking-widest">
+      BIRRIA & CANTARITOS · TLALNEPANTLA
+    </p>
+
+    <p class="text-[#F5E6C8]/80 max-w-xl mx-auto text-base sm:text-lg leading-relaxed mb-10">
+      Birria tatemada estilo Jalisco desde las 6 AM. Cantaritos en barro que prenden la mesa. Dos sucursales abiertas para que llegues con todos los tuyos.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a href="#reservar" class="font-condensed text-lg px-8 py-4 bg-[#FF6B1A] text-[#0A0706] rounded tracking-widest pulse-neon hover:scale-105 transition w-full sm:w-auto text-center">
+        RESERVAR MESA
+      </a>
+      <a href="#menu" class="font-condensed text-lg px-8 py-4 border-2 border-[#FFB800] text-[#FFB800] rounded tracking-widest hover:bg-[#FFB800] hover:text-[#0A0706] transition w-full sm:w-auto text-center">
+        VER EL MENÚ
+      </a>
+    </div>
+
+    <!-- Info rápida bajo el hero -->
+    <div class="mt-14 grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+      <div class="bg-card rounded p-3">
+        <p class="font-condensed text-[#FF6B1A] text-xs tracking-widest mb-1">HOY ABIERTO</p>
+        <p class="text-[#F5E6C8] text-sm" id="hoy-horario">10am – 11pm</p>
+      </div>
+      <div class="bg-card rounded p-3">
+        <p class="font-condensed text-[#FF6B1A] text-xs tracking-widest mb-1">2X1 EN COPEO</p>
+        <p class="text-[#F5E6C8] text-sm">Todos los días</p>
+      </div>
+      <div class="bg-card rounded p-3 col-span-2 sm:col-span-1">
+        <p class="font-condensed text-[#FF6B1A] text-xs tracking-widest mb-1">SUCURSALES</p>
+        <p class="text-[#F5E6C8] text-sm">2 en Tlalnepantla</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESPECIALIDADES -->
+<section class="py-16 sm:py-24 px-4 bg-madera">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">LO QUE NOS HACE</p>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider">ESPECIALIDAD DE LA CASA</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-card rounded-lg p-8 reveal">
+        <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-3">EL HÉROE</p>
+        <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] mb-4 tracking-wide">BIRRIA ESTILO JALISCO</h3>
+        <p class="text-[#F5E6C8]/80 leading-relaxed mb-6">
+          Tatemada en leña durante 8 horas, con chiles guajillo y ancho. La que aguanta la noche. Mediana, grande, en consomé, en su jugo o chamorro.
+        </p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="font-condensed text-xs px-3 py-1 bg-[#FF6B1A]/15 text-[#FF6B1A] rounded tracking-wider">DESDE $135</span>
+          <span class="font-condensed text-xs px-3 py-1 bg-[#FF6B1A]/15 text-[#FF6B1A] rounded tracking-wider">CHAMORRO $170</span>
+        </div>
+      </div>
+
+      <div class="bg-card rounded-lg p-8 reveal">
+        <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-3">EL QUE PRENDE LA MESA</p>
+        <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] mb-4 tracking-wide">CANTARITO CAZUELA</h3>
+        <p class="text-[#F5E6C8]/80 leading-relaxed mb-6">
+          5L o 10L servidos en barro. Tequila Arandas, sal, limón, jugo de naranja, toronja y refresco. El plan grupal arranca aquí.
+        </p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="font-condensed text-xs px-3 py-1 bg-[#FFB800]/15 text-[#FFB800] rounded tracking-wider">CAZUELA 5L · $950</span>
+          <span class="font-condensed text-xs px-3 py-1 bg-[#FFB800]/15 text-[#FFB800] rounded tracking-wider">CAZUELA 10L · $1,650</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENÚ COMPLETO -->
+<section id="menu" class="py-16 sm:py-24 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">EL MENÚ COMPLETO</p>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider mb-3">QUÉ HAY PARA HOY</h2>
+      <p class="text-[#8A7866] max-w-xl mx-auto">Desayunos · Birria · Snacks · Bebidas · Mezcalinas · Tequilas premium. Toca cualquier página para verla en grande.</p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(1)">
+        <img src="assets/menu-pagina-1.jpg" alt="Portada del menú" class="w-full h-auto" />
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(2)">
+        <img src="assets/menu-pagina-2.jpg" alt="Para desayunar" class="w-full h-auto" />
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(3)">
+        <img src="assets/menu-pagina-3.jpg" alt="Para comer" class="w-full h-auto" />
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(4)">
+        <img src="assets/menu-pagina-4.jpg" alt="Bebidas" class="w-full h-auto" />
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(5)">
+        <img src="assets/menu-pagina-5.jpg" alt="Mega bebidas" class="w-full h-auto" />
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(6)">
+        <img src="assets/menu-pagina-6.jpg" alt="Destilados" class="w-full h-auto" />
+      </div>
+    </div>
+
+    <p class="text-center mt-8 text-[#8A7866] text-sm">
+      Horario de desayunos: <span class="text-[#FFB800] font-medium">10:00 a 14:00 hrs</span>
+    </p>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <button class="absolute top-6 right-6 text-[#F5E6C8] text-4xl hover:text-[#FF6B1A] transition z-10" onclick="closeLightbox()">×</button>
+  <img id="lightbox-img" src="" alt="Menú ampliado" />
+</div>
+
+<!-- SUCURSALES -->
+<section id="sucursales" class="py-16 sm:py-24 px-4 bg-madera">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">DOS UBICACIONES</p>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider">¿DÓNDE CAEMOS?</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Sucursal Arboledas -->
+      <div class="bg-card rounded-lg overflow-hidden reveal">
+        <div class="aspect-video bg-[#0A0706]">
+          <iframe
+            src="https://maps.google.com/maps?q=Av.+Ni%C3%B1os+H%C3%A9roes+26+Residencial+El+Dorado+Tlalnepantla&output=embed"
+            class="w-full h-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+        <div class="p-6">
+          <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-2">SUCURSAL</p>
+          <h3 class="font-condensed text-3xl text-[#F5E6C8] mb-3 tracking-wide">ARBOLEDAS</h3>
+          <p class="text-[#F5E6C8]/80 mb-4 leading-relaxed">
+            Av. Niños Héroes #26<br/>
+            Res. El Dorado, 54026<br/>
+            Tlalnepantla, Edo. de México
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="https://wa.me/525510699414?text=Hola%2C%20quiero%20info%20de%20la%20sucursal%20Arboledas"
+               class="font-condensed text-sm px-4 py-2 bg-[#FF6B1A] text-[#0A0706] rounded text-center tracking-wider hover:bg-[#FFB800] transition">
+              WHATSAPP
+            </a>
+            <a href="https://maps.google.com/?q=Av.+Ni%C3%B1os+H%C3%A9roes+26+Residencial+El+Dorado+Tlalnepantla"
+               target="_blank" rel="noopener"
+               class="font-condensed text-sm px-4 py-2 border border-[#4A2C1A] text-[#F5E6C8] rounded text-center tracking-wider hover:border-[#FFB800] transition">
+              CÓMO LLEGAR
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sucursal Tlalnepantla Centro -->
+      <div class="bg-card rounded-lg overflow-hidden reveal">
+        <div class="aspect-video bg-[#0A0706]">
+          <iframe
+            src="https://maps.google.com/maps?q=Av.+Morelos+39+San+Javier+Tlalnepantla&output=embed"
+            class="w-full h-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+        <div class="p-6">
+          <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-2">SUCURSAL</p>
+          <h3 class="font-condensed text-3xl text-[#F5E6C8] mb-3 tracking-wide">TLALNEPANTLA CENTRO</h3>
+          <p class="text-[#F5E6C8]/80 mb-4 leading-relaxed">
+            Av. Morelos #39<br/>
+            San Javier, 54030<br/>
+            Tlalnepantla, Edo. de México
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="https://wa.me/525510699414?text=Hola%2C%20quiero%20info%20de%20la%20sucursal%20Centro"
+               class="font-condensed text-sm px-4 py-2 bg-[#FF6B1A] text-[#0A0706] rounded text-center tracking-wider hover:bg-[#FFB800] transition">
+              WHATSAPP
+            </a>
+            <a href="https://maps.google.com/?q=Av.+Morelos+39+San+Javier+Tlalnepantla"
+               target="_blank" rel="noopener"
+               class="font-condensed text-sm px-4 py-2 border border-[#4A2C1A] text-[#F5E6C8] rounded text-center tracking-wider hover:border-[#FFB800] transition">
+              CÓMO LLEGAR
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horarios -->
+    <div id="horarios" class="mt-10 bg-card rounded-lg p-6 sm:p-8 reveal">
+      <h3 class="font-condensed text-2xl text-[#FFB800] glow-amarillo-soft tracking-widest mb-5 text-center">HORARIOS</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+        <div>
+          <p class="font-condensed text-[#FF6B1A] tracking-wider text-sm mb-1">LUNES — JUEVES</p>
+          <p class="text-[#F5E6C8]">10:00 AM — 11:00 PM</p>
+        </div>
+        <div class="sm:border-x border-[#4A2C1A] sm:px-4">
+          <p class="font-condensed text-[#FF6B1A] tracking-wider text-sm mb-1">VIERNES — SÁBADO</p>
+          <p class="text-[#F5E6C8]">10:00 AM — 2:00 AM</p>
+        </div>
+        <div>
+          <p class="font-condensed text-[#FF6B1A] tracking-wider text-sm mb-1">DOMINGO</p>
+          <p class="text-[#F5E6C8]">10:00 AM — 10:00 PM</p>
+        </div>
+      </div>
+      <p class="text-center text-[#8A7866] text-xs mt-5">Desayunos: 10:00 — 14:00 hrs · Promoción 2x1 en copeo todos los días</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVAR -->
+<section id="reservar" class="py-16 sm:py-24 px-4">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-10 reveal">
+      <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">APARTA TU MESA</p>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider mb-3">RESERVAR</h2>
+      <p class="text-[#8A7866] max-w-md mx-auto">Llena los datos y te abrimos un chat de WhatsApp con tu solicitud lista para enviar.</p>
+    </div>
+
+    <form id="reservaForm" class="bg-card rounded-lg p-6 sm:p-8 space-y-5 reveal" onsubmit="enviarWhatsApp(event)">
+
+      <div>
+        <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">NOMBRE *</label>
+        <input type="text" id="nombre" required placeholder="Tu nombre" class="form-input w-full px-4 py-3 rounded" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">PERSONAS *</label>
+          <input type="number" id="personas" min="1" max="50" required placeholder="¿Cuántos?" class="form-input w-full px-4 py-3 rounded" />
+        </div>
+        <div>
+          <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">SUCURSAL *</label>
+          <select id="sucursal" required class="form-input w-full px-4 py-3 rounded">
+            <option value="">Elige una</option>
+            <option value="Arboledas">Arboledas</option>
+            <option value="Tlalnepantla Centro">Tlalnepantla Centro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">FECHA *</label>
+          <input type="date" id="fecha" required class="form-input w-full px-4 py-3 rounded" />
+        </div>
+        <div>
+          <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">HORA *</label>
+          <input type="time" id="hora" required class="form-input w-full px-4 py-3 rounded" />
+        </div>
+      </div>
+
+      <div>
+        <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">COMENTARIOS</label>
+        <textarea id="comentarios" rows="3" placeholder="Cumpleaños, cantarito cazuela, alergias…" class="form-input w-full px-4 py-3 rounded resize-none"></textarea>
+      </div>
+
+      <button type="submit" class="font-condensed w-full text-lg px-8 py-4 bg-[#FF6B1A] text-[#0A0706] rounded tracking-widest pulse-neon hover:scale-[1.02] transition">
+        ENVIAR POR WHATSAPP
+      </button>
+
+      <p class="text-[#8A7866] text-xs text-center">Se abrirá WhatsApp con tu mensaje listo. Tú lo envías y nosotros te confirmamos.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#0A0706] border-t border-[#4A2C1A]/60 py-12 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-8">
+      <img src="assets/logo-agave.png" alt="El Agave" class="h-20 mx-auto mb-4" style="object-fit: contain;" />
+      <p class="font-condensed text-[#FF6B1A] glow-amarillo-soft tracking-widest">PRENDE LA NOCHE</p>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-6 text-center sm:text-left mb-8">
+      <div>
+        <p class="font-condensed text-[#FFB800] tracking-widest text-sm mb-3">CONTACTO</p>
+        <a href="https://wa.me/525510699414" class="block text-[#F5E6C8]/80 hover:text-[#FF6B1A] transition text-sm">📱 55 1069 9414</a>
+        <a href="mailto:elagavearandas@gmail.com" class="block text-[#F5E6C8]/80 hover:text-[#FF6B1A] transition text-sm break-all">elagavearandas@gmail.com</a>
+      </div>
+      <div>
+        <p class="font-condensed text-[#FFB800] tracking-widest text-sm mb-3">REDES</p>
+        <a href="https://instagram.com/el_agave_arandas" target="_blank" rel="noopener" class="block text-[#F5E6C8]/80 hover:text-[#FF6B1A] transition text-sm">
+          📷 @el_agave_arandas
+        </a>
+      </div>
+      <div>
+        <p class="font-condensed text-[#FFB800] tracking-widest text-sm mb-3">SUCURSALES</p>
+        <a href="#sucursales" class="block text-[#F5E6C8]/80 hover:text-[#FF6B1A] transition text-sm">📍 Arboledas</a>
+        <a href="#sucursales" class="block text-[#F5E6C8]/80 hover:text-[#FF6B1A] transition text-sm">📍 Tlalnepantla Centro</a>
+      </div>
+    </div>
+
+    <div class="pt-6 border-t border-[#4A2C1A]/60 text-center">
+      <p class="text-[#8A7866] text-xs">
+        © <span id="year">2026</span> El Agave — Birria & Cantaritos. Todos los derechos reservados.
+      </p>
+      <p class="text-[#8A7866]/60 text-xs mt-1">Sitio diseñado por <a href="#" class="hover:text-[#FF6B1A] transition">Orbit Films</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a href="https://wa.me/525510699414?text=Hola%2C%20quiero%20info%20de%20El%20Agave"
+   class="fixed bottom-5 right-5 z-40 bg-[#25D366] hover:scale-110 transition rounded-full p-3 shadow-2xl"
+   aria-label="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+</a>
+
+<script>
+  // Año dinámico
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Horario "hoy" dinámico
+  (function setHoyHorario() {
+    const dia = new Date().getDay(); // 0 = Dom, 6 = Sab
+    let texto = '10am – 11pm';
+    if (dia === 5 || dia === 6) texto = '10am – 2am';
+    else if (dia === 0) texto = '10am – 10pm';
+    document.getElementById('hoy-horario').textContent = texto;
+  })();
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(r => obs.observe(r));
+
+  // Lightbox del menú
+  function openLightbox(num) {
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightbox-img').src = `assets/menu-pagina-${num}.jpg`;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Fecha mínima en form = hoy
+  document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+
+  // Enviar reservación por WhatsApp
+  function enviarWhatsApp(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value.trim();
+    const personas = document.getElementById('personas').value;
+    const sucursal = document.getElementById('sucursal').value;
+    const fecha = document.getElementById('fecha').value;
+    const hora = document.getElementById('hora').value;
+    const comentarios = document.getElementById('comentarios').value.trim();
+
+    // Formatear fecha bonita
+    const [y, m, d] = fecha.split('-');
+    const fechaBonita = `${d}/${m}/${y}`;
+
+    let mensaje = `Hola El Agave! Quiero reservar una mesa:\n\n`;
+    mensaje += `👤 *Nombre:* ${nombre}\n`;
+    mensaje += `👥 *Personas:* ${personas}\n`;
+    mensaje += `📍 *Sucursal:* ${sucursal}\n`;
+    mensaje += `📅 *Fecha:* ${fechaBonita}\n`;
+    mensaje += `🕐 *Hora:* ${hora}`;
+    if (comentarios) mensaje += `\n💬 *Comentarios:* ${comentarios}`;
+
+    const url = `https://wa.me/525510699414?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  }
+</script>
+
+</body>
+</html>
