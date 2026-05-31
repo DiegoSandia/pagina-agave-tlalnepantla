@@ -165,11 +165,11 @@
     </h1>
 
     <p class="font-condensed text-xl sm:text-2xl text-[#FF6B1A] glow-amarillo-soft mb-3 tracking-widest">
-      BIRRIA & CANTARITOS · TLALNEPANTLA
+      BIRRIA & CANTARITOS
     </p>
 
     <p class="text-[#F5E6C8]/80 max-w-xl mx-auto text-base sm:text-lg leading-relaxed mb-10">
-      Birria tatemada estilo Jalisco desde las 6 AM. Cantaritos en barro que prenden la mesa. Dos sucursales abiertas para que llegues con todos los tuyos.
+      Birria tatemada estilo Jalisco desde las 10 AM. Cantaritos en barro que prenden la mesa. Dos sucursales abiertas para que llegues con todos los tuyos.
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -249,48 +249,43 @@
 <section id="menu" class="py-16 sm:py-24 px-4">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12 reveal">
-      <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">EL MENÚ COMPLETO</p>
-      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider mb-3">QUÉ HAY PARA HOY</h2>
-      <p class="text-[#8A7866] max-w-xl mx-auto">Desayunos · Birria · Snacks · Bebidas · Mezcalinas · Tequilas premium. Toca cualquier foto para verla en grande.</p>
+      <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">LO QUE TENEMOS</p>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider mb-6">QUÉ HAY PARA HOY</h2>
+      <!-- Categorías -->
+      <div class="flex flex-wrap justify-center gap-3 mb-2">
+        <span class="font-condensed px-4 py-2 bg-card border border-[#4A2C1A] text-[#F5E6C8] rounded tracking-widest text-sm">COMIDAS</span>
+        <span class="font-condensed px-4 py-2 bg-card border border-[#4A2C1A] text-[#F5E6C8] rounded tracking-widest text-sm">BEBIDAS</span>
+        <span class="font-condensed px-4 py-2 bg-card border border-[#4A2C1A] text-[#F5E6C8] rounded tracking-widest text-sm">DESAYUNOS</span>
+      </div>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-      <div class="menu-card bg-card rounded overflow-hidden col-span-2 row-span-1" onclick="openLightbox('assets/birria.png','Birria estilo Jalisco')">
-        <div class="aspect-[16/9] overflow-hidden">
+    <!-- 3 fotos -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-10">
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/cantarito.png','Cantarito Cazuela')">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="assets/cantarito.png" alt="Cantarito Cazuela" class="w-full h-full object-cover" />
+        </div>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-3">CANTARITO CAZUELA</p>
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/birria.png','Birria estilo Jalisco')">
+        <div class="aspect-[4/3] overflow-hidden">
           <img src="assets/birria.png" alt="Birria estilo Jalisco" class="w-full h-full object-cover" />
         </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">BIRRIA ESTILO JALISCO</p>
-      </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/cantarito.png','Cantarito Cazuela')">
-        <div class="aspect-square overflow-hidden">
-          <img src="assets/cantarito.png" alt="Cantarito" class="w-full h-full object-cover" />
-        </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CANTARITO</p>
-      </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/cantarito-hero.png','Cantarito de Cortesía')">
-        <div class="aspect-square overflow-hidden">
-          <img src="assets/cantarito-hero.png" alt="Cantarito de cortesía" class="w-full h-full object-cover" />
-        </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CANTARITO DE CORTESÍA</p>
-      </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/carne-en-su-jugo.png','Carne en su jugo')">
-        <div class="aspect-square overflow-hidden">
-          <img src="assets/carne-en-su-jugo.png" alt="Carne en su jugo" class="w-full h-full object-cover" />
-        </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CARNE EN SU JUGO</p>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-3">BIRRIA ESTILO JALISCO</p>
       </div>
       <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/chilaquiles.png','Chilaquiles')">
-        <div class="aspect-square overflow-hidden">
+        <div class="aspect-[4/3] overflow-hidden">
           <img src="assets/chilaquiles.png" alt="Chilaquiles con pollo" class="w-full h-full object-cover" />
         </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CHILAQUILES</p>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-3">CHILAQUILES</p>
       </div>
-      <div class="menu-card bg-card rounded overflow-hidden col-span-2" onclick="openLightbox('assets/birria.png','Birria tatemada')">
-        <div class="aspect-[16/9] overflow-hidden">
-          <img src="assets/carne-en-su-jugo.png" alt="Carne en su jugo" class="w-full h-full object-cover" />
-        </div>
-        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">Y MUCHO MÁS EN EL MENÚ</p>
-      </div>
+    </div>
+
+    <!-- Aviso menú digital -->
+    <div class="text-center bg-card rounded-lg py-8 px-6 reveal">
+      <p class="font-condensed text-[#FF6B1A] tracking-widest text-sm mb-2">PRÓXIMAMENTE</p>
+      <p class="font-condensed text-2xl sm:text-3xl text-[#F5E6C8] tracking-wider mb-3">MENÚ DIGITAL COMPLETO</p>
+      <p class="text-[#8A7866] text-sm">Muy pronto podrás ver todos los platillos, bebidas y precios directo aquí.</p>
     </div>
 
     <p class="text-center mt-8 text-[#8A7866] text-sm">
