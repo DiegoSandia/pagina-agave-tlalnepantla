@@ -150,7 +150,14 @@
 
 <!-- HERO -->
 <section id="inicio" class="hero-bg min-h-screen flex items-center justify-center px-4 pt-20 pb-12 relative">
-  <div class="max-w-4xl mx-auto text-center">
+  <!-- Video background -->
+  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" style="opacity:0.22;">
+    <source src="assets/hero-video.mp4" type="video/mp4">
+  </video>
+  <!-- Overlay oscuro sobre el video -->
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(10,7,6,0.55) 0%, rgba(10,7,6,0.30) 50%, rgba(10,7,6,0.75) 100%);"></div>
+
+  <div class="max-w-4xl mx-auto text-center relative z-10">
     <img src="assets/logo-agave.png" alt="El Agave Birria & Cantaritos" class="h-44 sm:h-60 mx-auto mb-6 sm:mb-8" style="object-fit: contain; filter: drop-shadow(0 0 30px rgba(255, 107, 26, 0.4));" />
 
     <h1 class="font-display text-5xl sm:text-7xl md:text-8xl glow-amarillo neon-flicker mb-4 leading-none">
@@ -201,27 +208,37 @@
     </div>
 
     <div class="grid md:grid-cols-2 gap-6">
-      <div class="bg-card rounded-lg p-8 reveal">
-        <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-3">EL HÉROE</p>
-        <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] mb-4 tracking-wide">BIRRIA ESTILO JALISCO</h3>
-        <p class="text-[#F5E6C8]/80 leading-relaxed mb-6">
-          Tatemada en leña durante 8 horas, con chiles guajillo y ancho. La que aguanta la noche. Mediana, grande, en consomé, en su jugo o chamorro.
-        </p>
-        <div class="flex gap-2 flex-wrap">
-          <span class="font-condensed text-xs px-3 py-1 bg-[#FF6B1A]/15 text-[#FF6B1A] rounded tracking-wider">DESDE $135</span>
-          <span class="font-condensed text-xs px-3 py-1 bg-[#FF6B1A]/15 text-[#FF6B1A] rounded tracking-wider">CHAMORRO $170</span>
+      <div class="bg-card rounded-lg overflow-hidden reveal">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="assets/birria.png" alt="Birria estilo Jalisco" class="w-full h-full object-cover" style="transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div class="p-8">
+          <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-3">EL HÉROE</p>
+          <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] mb-4 tracking-wide">BIRRIA ESTILO JALISCO</h3>
+          <p class="text-[#F5E6C8]/80 leading-relaxed mb-6">
+            Tatemada en leña durante 8 horas, con chiles guajillo y ancho. La que aguanta la noche. Mediana, grande, en consomé, en su jugo o chamorro.
+          </p>
+          <div class="flex gap-2 flex-wrap">
+            <span class="font-condensed text-xs px-3 py-1 bg-[#FF6B1A]/15 text-[#FF6B1A] rounded tracking-wider">DESDE $135</span>
+            <span class="font-condensed text-xs px-3 py-1 bg-[#FF6B1A]/15 text-[#FF6B1A] rounded tracking-wider">CHAMORRO $170</span>
+          </div>
         </div>
       </div>
 
-      <div class="bg-card rounded-lg p-8 reveal">
-        <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-3">EL QUE PRENDE LA MESA</p>
-        <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] mb-4 tracking-wide">CANTARITO CAZUELA</h3>
-        <p class="text-[#F5E6C8]/80 leading-relaxed mb-6">
-          5L o 10L servidos en barro. Tequila Arandas, sal, limón, jugo de naranja, toronja y refresco. El plan grupal arranca aquí.
-        </p>
-        <div class="flex gap-2 flex-wrap">
-          <span class="font-condensed text-xs px-3 py-1 bg-[#FFB800]/15 text-[#FFB800] rounded tracking-wider">CAZUELA 5L · $950</span>
-          <span class="font-condensed text-xs px-3 py-1 bg-[#FFB800]/15 text-[#FFB800] rounded tracking-wider">CAZUELA 10L · $1,650</span>
+      <div class="bg-card rounded-lg overflow-hidden reveal">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="assets/cantarito.png" alt="Cantarito Cazuela" class="w-full h-full object-cover" style="transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div class="p-8">
+          <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-3">EL QUE PRENDE LA MESA</p>
+          <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] mb-4 tracking-wide">CANTARITO CAZUELA</h3>
+          <p class="text-[#F5E6C8]/80 leading-relaxed mb-6">
+            5L o 10L servidos en barro. Tequila Arandas, sal, limón, jugo de naranja, toronja y refresco. El plan grupal arranca aquí.
+          </p>
+          <div class="flex gap-2 flex-wrap">
+            <span class="font-condensed text-xs px-3 py-1 bg-[#FFB800]/15 text-[#FFB800] rounded tracking-wider">CAZUELA 5L · $950</span>
+            <span class="font-condensed text-xs px-3 py-1 bg-[#FFB800]/15 text-[#FFB800] rounded tracking-wider">CAZUELA 10L · $1,650</span>
+          </div>
         </div>
       </div>
     </div>
@@ -234,27 +251,45 @@
     <div class="text-center mb-12 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">EL MENÚ COMPLETO</p>
       <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider mb-3">QUÉ HAY PARA HOY</h2>
-      <p class="text-[#8A7866] max-w-xl mx-auto">Desayunos · Birria · Snacks · Bebidas · Mezcalinas · Tequilas premium. Toca cualquier página para verla en grande.</p>
+      <p class="text-[#8A7866] max-w-xl mx-auto">Desayunos · Birria · Snacks · Bebidas · Mezcalinas · Tequilas premium. Toca cualquier foto para verla en grande.</p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(1)">
-        <img src="assets/menu-pagina-1.jpg" alt="Portada del menú" class="w-full h-auto" />
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+      <div class="menu-card bg-card rounded overflow-hidden col-span-2 row-span-1" onclick="openLightbox('assets/birria.png','Birria estilo Jalisco')">
+        <div class="aspect-[16/9] overflow-hidden">
+          <img src="assets/birria.png" alt="Birria estilo Jalisco" class="w-full h-full object-cover" />
+        </div>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">BIRRIA ESTILO JALISCO</p>
       </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(2)">
-        <img src="assets/menu-pagina-2.jpg" alt="Para desayunar" class="w-full h-auto" />
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/cantarito.png','Cantarito Cazuela')">
+        <div class="aspect-square overflow-hidden">
+          <img src="assets/cantarito.png" alt="Cantarito" class="w-full h-full object-cover" />
+        </div>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CANTARITO</p>
       </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(3)">
-        <img src="assets/menu-pagina-3.jpg" alt="Para comer" class="w-full h-auto" />
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/cantarito-hero.png','Cantarito de Cortesía')">
+        <div class="aspect-square overflow-hidden">
+          <img src="assets/cantarito-hero.png" alt="Cantarito de cortesía" class="w-full h-full object-cover" />
+        </div>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CANTARITO DE CORTESÍA</p>
       </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(4)">
-        <img src="assets/menu-pagina-4.jpg" alt="Bebidas" class="w-full h-auto" />
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/carne-en-su-jugo.png','Carne en su jugo')">
+        <div class="aspect-square overflow-hidden">
+          <img src="assets/carne-en-su-jugo.png" alt="Carne en su jugo" class="w-full h-full object-cover" />
+        </div>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CARNE EN SU JUGO</p>
       </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(5)">
-        <img src="assets/menu-pagina-5.jpg" alt="Mega bebidas" class="w-full h-auto" />
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/chilaquiles.png','Chilaquiles')">
+        <div class="aspect-square overflow-hidden">
+          <img src="assets/chilaquiles.png" alt="Chilaquiles con pollo" class="w-full h-full object-cover" />
+        </div>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CHILAQUILES</p>
       </div>
-      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox(6)">
-        <img src="assets/menu-pagina-6.jpg" alt="Destilados" class="w-full h-auto" />
+      <div class="menu-card bg-card rounded overflow-hidden col-span-2" onclick="openLightbox('assets/birria.png','Birria tatemada')">
+        <div class="aspect-[16/9] overflow-hidden">
+          <img src="assets/carne-en-su-jugo.png" alt="Carne en su jugo" class="w-full h-full object-cover" />
+        </div>
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">Y MUCHO MÁS EN EL MENÚ</p>
       </div>
     </div>
 
@@ -494,9 +529,11 @@
   reveals.forEach(r => obs.observe(r));
 
   // Lightbox del menú
-  function openLightbox(num) {
+  function openLightbox(src, alt) {
     const lb = document.getElementById('lightbox');
-    document.getElementById('lightbox-img').src = `assets/menu-pagina-${num}.jpg`;
+    const img = document.getElementById('lightbox-img');
+    img.src = src;
+    img.alt = alt || '';
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
