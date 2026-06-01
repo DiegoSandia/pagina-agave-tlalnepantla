@@ -542,32 +542,32 @@
     </div>
     <!-- Opciones -->
     <div class="p-4 space-y-2">
-      <button onclick="waOpcion('reserva')"   class="wa-opcion w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg bg-[#2A1810] hover:bg-[#4A2C1A] transition border border-[#4A2C1A]/60 hover:border-[#FF6B1A]/40">
-        <span class="text-xl">🍽️</span>
+      <button onclick="waOpcion('promo')"     class="wa-opcion w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg bg-[#2A1810] hover:bg-[#4A2C1A] transition border border-[#4A2C1A]/60 hover:border-[#FF6B1A]/40">
+        <span class="text-xl">🔥</span>
         <div>
-          <p class="font-condensed text-[#F5E6C8] tracking-wider text-sm">RESERVAR UNA MESA</p>
-          <p class="text-[#8A7866] text-xs">Aparta tu lugar para hoy o cualquier día</p>
-        </div>
-      </button>
-      <button onclick="waOpcion('cantarito')" class="wa-opcion w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg bg-[#2A1810] hover:bg-[#4A2C1A] transition border border-[#4A2C1A]/60 hover:border-[#FF6B1A]/40">
-        <span class="text-xl">🍹</span>
-        <div>
-          <p class="font-condensed text-[#F5E6C8] tracking-wider text-sm">CANTARITOS Y CAZUELAS</p>
-          <p class="text-[#8A7866] text-xs">Precios, tamaños y disponibilidad</p>
+          <p class="font-condensed text-[#F5E6C8] tracking-wider text-sm">PROMOCIONES DE ESTA SEMANA</p>
+          <p class="text-[#8A7866] text-xs">¿Qué hay de especial? Ofertas y 2x1 vigentes</p>
         </div>
       </button>
       <button onclick="waOpcion('evento')"    class="wa-opcion w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg bg-[#2A1810] hover:bg-[#4A2C1A] transition border border-[#4A2C1A]/60 hover:border-[#FF6B1A]/40">
         <span class="text-xl">🎉</span>
         <div>
-          <p class="font-condensed text-[#F5E6C8] tracking-wider text-sm">EVENTOS Y GRUPOS</p>
-          <p class="text-[#8A7866] text-xs">Cumpleaños, despedidas, reuniones</p>
+          <p class="font-condensed text-[#F5E6C8] tracking-wider text-sm">EVENTO O CELEBRACIÓN</p>
+          <p class="text-[#8A7866] text-xs">Cumpleaños, despedidas, reuniones de grupo</p>
         </div>
       </button>
-      <button onclick="waOpcion('info')"      class="wa-opcion w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg bg-[#2A1810] hover:bg-[#4A2C1A] transition border border-[#4A2C1A]/60 hover:border-[#FF6B1A]/40">
-        <span class="text-xl">📍</span>
+      <button onclick="waOpcion('vip')"       class="wa-opcion w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg bg-[#2A1810] hover:bg-[#4A2C1A] transition border border-[#4A2C1A]/60 hover:border-[#FF6B1A]/40">
+        <span class="text-xl">⭐</span>
         <div>
-          <p class="font-condensed text-[#F5E6C8] tracking-wider text-sm">UBICACIÓN Y HORARIOS</p>
-          <p class="text-[#8A7866] text-xs">Direcciones, cómo llegar, horarios</p>
+          <p class="font-condensed text-[#F5E6C8] tracking-wider text-sm">EXPERIENCIA VIP</p>
+          <p class="text-[#8A7866] text-xs">Mesa privada, cazuela de cortesía, noche completa</p>
+        </div>
+      </button>
+      <button onclick="waOpcion('lista')"     class="wa-opcion w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg bg-[#2A1810] hover:bg-[#4A2C1A] transition border border-[#4A2C1A]/60 hover:border-[#FF6B1A]/40">
+        <span class="text-xl">📲</span>
+        <div>
+          <p class="font-condensed text-[#F5E6C8] tracking-wider text-sm">QUIERO ENTERARME PRIMERO</p>
+          <p class="text-[#8A7866] text-xs">Recibir eventos, promos y novedades cada semana</p>
         </div>
       </button>
     </div>
@@ -632,10 +632,10 @@
   // ── Wizard WhatsApp ───────────────────────────────────────
   const WA_NUM = '525510699414';
   const waMessages = {
-    reserva:   'Hola El Agave! 🍽️ Quiero reservar una mesa.',
-    cantarito: 'Hola El Agave! 🍹 Quiero información sobre cantaritos y cazuelas — precios y tamaños.',
-    evento:    'Hola El Agave! 🎉 Quiero información para organizar un evento o reunión grupal.',
-    info:      'Hola El Agave! 📍 ¿Me pueden dar la dirección y horarios de sus sucursales?',
+    promo:  'Hola El Agave! 🔥 ¿Qué promociones y ofertas tienen esta semana?',
+    evento: 'Hola El Agave! 🎉 Quiero organizar una celebración — ¿qué opciones tienen para grupos y eventos?',
+    vip:    'Hola El Agave! ⭐ Me interesa una experiencia VIP — mesa privada y una noche completa. ¿Qué incluye?',
+    lista:  'Hola El Agave! 📲 Quiero estar en su lista para recibir eventos, promos y novedades cada semana. ¡Agréguenme!',
   };
 
   function abrirWizard() {
