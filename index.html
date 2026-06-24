@@ -299,11 +299,34 @@
 
     </div>
 
-    <!-- Aviso menú digital -->
-    <div class="text-center bg-card rounded-lg py-8 px-6 reveal">
-      <p class="font-condensed text-[#FF6B1A] tracking-widest text-sm mb-2">PRÓXIMAMENTE</p>
-      <p class="font-condensed text-2xl sm:text-3xl text-[#F5E6C8] tracking-wider mb-3">MENÚ DIGITAL COMPLETO</p>
-      <p class="text-[#8A7866] text-sm">Muy pronto podrás ver todos los platillos, bebidas y precios directo aquí.</p>
+    <!-- Menú completo: galería de páginas -->
+    <div class="text-center mb-8 reveal">
+      <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">MENÚ COMPLETO</p>
+      <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] tracking-wider">TODOS LOS PRECIOS</h3>
+      <p class="text-[#8A7866] text-sm mt-2">Toca cualquier página para verla en grande</p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 mb-4">
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/menu-pagina-1.png','Para desayunar')">
+        <img src="assets/menu-pagina-1.png" alt="Para desayunar" class="w-full h-auto" />
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">DESAYUNOS</p>
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/menu-pagina-2.png','Para comer')">
+        <img src="assets/menu-pagina-2.png" alt="Para comer" class="w-full h-auto" />
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">PARA COMER</p>
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/menu-pagina-3.png','Bebidas sin alcohol')">
+        <img src="assets/menu-pagina-3.png" alt="Bebidas sin alcohol" class="w-full h-auto" />
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">BEBIDAS</p>
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/menu-pagina-4.png','Cervezas y coctelería')">
+        <img src="assets/menu-pagina-4.png" alt="Cervezas y coctelería" class="w-full h-auto" />
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">CERVEZAS Y CÓCTELES</p>
+      </div>
+      <div class="menu-card bg-card rounded overflow-hidden" onclick="openLightbox('assets/menu-pagina-5.png','Licores')">
+        <img src="assets/menu-pagina-5.png" alt="Licores" class="w-full h-auto" />
+        <p class="font-condensed text-center text-[#FFB800] tracking-widest text-xs py-2">LICORES</p>
+      </div>
     </div>
 
     <p class="text-center mt-8 text-[#8A7866] text-sm">
