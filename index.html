@@ -17,13 +17,17 @@
 <meta name="twitter:image" content="https://pagina-agave.vercel.app/assets/logo-agave.png" />
 
 <link rel="icon" type="image/png" href="assets/logo-agave.png" />
+<link rel="apple-touch-icon" href="assets/logo-agave.png" />
+<meta name="theme-color" content="#0A0706" />
+<link rel="preconnect" href="https://maps.googleapis.com" />
+<link rel="preconnect" href="https://maps.gstatic.com" crossorigin />
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Restaurant",
   "name": "El Agave — Birria & Cantaritos",
-  "description": "Birria tatemada estilo Jalisco y cantaritos en barro. 2 sucursales en Tlalnepantla.",
+  "description": "Birria tatemada estilo Jalisco y cantaritos en barro. 2 sucursales en Tlalnepantla de Baz.",
   "url": "https://pagina-agave.vercel.app",
   "telephone": "+525510699414",
   "email": "elagavearandas@gmail.com",
@@ -31,19 +35,26 @@
   "priceRange": "$$",
   "image": "https://pagina-agave.vercel.app/assets/logo-agave.png",
   "openingHours": ["Mo-Th 10:00-23:00", "Fr-Sa 10:00-02:00", "Su 10:00-22:00"],
+  "currenciesAccepted": "MXN",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.4",
+    "reviewCount": "274",
+    "bestRating": "5"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Morelos 39",
+    "addressLocality": "Tlalnepantla de Baz",
+    "addressRegion": "Estado de México",
+    "postalCode": "54030",
+    "addressCountry": "MX"
+  },
+  "hasMap": "https://maps.google.com/?q=Av.+Morelos+39+San+Javier+Tlalnepantla",
   "sameAs": [
     "https://instagram.com/el_agave_arandas",
     "https://www.facebook.com/cantaritoselagave/"
-  ],
-  "location": {
-    "@type": "Place",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Tlalnepantla",
-      "addressRegion": "Estado de México",
-      "addressCountry": "MX"
-    }
-  }
+  ]
 }
 </script>
 
@@ -210,7 +221,7 @@
     <!-- Mobile: reservar + hamburger -->
     <div class="flex sm:hidden items-center gap-2">
       <a href="#reservar" class="font-condensed text-sm px-3 py-2 bg-[#FF6B1A] text-[#0A0706] hover:bg-[#FFB800] transition rounded">RESERVAR</a>
-      <button id="menu-btn" onclick="toggleMobileMenu()" aria-label="Menú" class="p-2 text-[#F5E6C8] hover:text-[#FFB800] transition">
+      <button id="menu-btn" onclick="toggleMobileMenu()" aria-label="Menú" aria-expanded="false" class="p-2 text-[#F5E6C8] hover:text-[#FFB800] transition">
         <svg id="icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         <svg id="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
       </button>
@@ -221,6 +232,7 @@
 <!-- Mobile dropdown -->
 <div id="mobile-menu" class="fixed top-[60px] left-0 right-0 z-40 nav-blur border-b border-[#4A2C1A]/40 sm:hidden" style="display:none;">
   <div class="flex flex-col">
+    <a href="#resenas" onclick="closeMobileMenu()" class="font-condensed text-base px-6 py-3 text-[#F5E6C8] hover:text-[#FFB800] hover:bg-[#4A2C1A]/20 transition border-b border-[#4A2C1A]/20">RESEÑAS</a>
     <a href="#menu" onclick="closeMobileMenu()" class="font-condensed text-base px-6 py-3 text-[#F5E6C8] hover:text-[#FFB800] hover:bg-[#4A2C1A]/20 transition border-b border-[#4A2C1A]/20">MENÚ</a>
     <a href="#sucursales" onclick="closeMobileMenu()" class="font-condensed text-base px-6 py-3 text-[#F5E6C8] hover:text-[#FFB800] hover:bg-[#4A2C1A]/20 transition border-b border-[#4A2C1A]/20">SUCURSALES</a>
     <a href="#horarios" onclick="closeMobileMenu()" class="font-condensed text-base px-6 py-3 text-[#F5E6C8] hover:text-[#FFB800] hover:bg-[#4A2C1A]/20 transition border-b border-[#4A2C1A]/20">HORARIOS</a>
@@ -239,7 +251,7 @@
   <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(10,7,6,0.55) 0%, rgba(10,7,6,0.30) 50%, rgba(10,7,6,0.75) 100%);"></div>
 
   <div class="w-full max-w-4xl mx-auto text-center relative z-10">
-    <img src="assets/logo-agave.png" alt="El Agave Birria & Cantaritos" class="h-28 sm:h-48 md:h-60 mx-auto mb-4 sm:mb-6" style="object-fit: contain; filter: drop-shadow(0 0 30px rgba(255, 107, 26, 0.4));" />
+    <img src="assets/logo-agave.png" alt="El Agave Birria & Cantaritos" class="h-28 sm:h-48 md:h-60 mx-auto mb-4 sm:mb-6" style="object-fit: contain; filter: drop-shadow(0 0 30px rgba(255, 107, 26, 0.4));" fetchpriority="high" loading="eager" />
 
     <h1 class="font-display text-4xl sm:text-6xl md:text-8xl glow-amarillo neon-flicker mb-3 leading-none">
       PRENDE<br/>LA NOCHE
@@ -268,7 +280,7 @@
     <!-- Info rápida bajo el hero -->
     <div class="mt-8 sm:mt-12 grid grid-cols-3 gap-2 sm:gap-4 max-w-sm sm:max-w-2xl mx-auto">
       <div class="bg-card rounded p-2 sm:p-3">
-        <p class="font-condensed text-[#FF6B1A] text-xs tracking-widest mb-1">HOY ABIERTO</p>
+        <p id="hoy-status" class="font-condensed text-[#FF6B1A] text-xs tracking-widest mb-1">HOY ABIERTO</p>
         <p class="text-[#F5E6C8] text-xs sm:text-sm" id="hoy-horario">10am – 11pm</p>
       </div>
       <div class="bg-card rounded p-2 sm:p-3">
@@ -331,11 +343,15 @@
 </section>
 
 <!-- RESEÑAS -->
-<section class="py-16 sm:py-20 px-4">
+<section id="resenas" class="py-16 sm:py-20 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-10 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">LO QUE DICEN</p>
       <h2 class="font-condensed text-4xl sm:text-5xl text-[#F5E6C8] tracking-wider">NUESTROS CLIENTES</h2>
+      <div class="inline-flex items-center gap-2 mt-4 bg-[#FFB800]/10 border border-[#FFB800]/30 rounded-full px-5 py-2">
+        <span class="text-[#FFB800] font-semibold">★ 4.4</span>
+        <span class="text-[#8A7866] text-xs">274 reseñas en Google</span>
+      </div>
     </div>
     <div class="grid md:grid-cols-3 gap-5">
 
@@ -464,6 +480,7 @@
           </p>
           <div class="flex flex-col sm:flex-row gap-3">
             <a href="https://wa.me/525510699414?text=Hola%2C%20quiero%20info%20de%20la%20sucursal%20Arboledas"
+               target="_blank" rel="noopener"
                class="font-condensed text-sm px-4 py-2 bg-[#FF6B1A] text-[#0A0706] rounded text-center tracking-wider hover:bg-[#FFB800] transition">
               WHATSAPP
             </a>
@@ -496,6 +513,7 @@
           </p>
           <div class="flex flex-col sm:flex-row gap-3">
             <a href="https://wa.me/525510699414?text=Hola%2C%20quiero%20info%20de%20la%20sucursal%20Centro"
+               target="_blank" rel="noopener"
                class="font-condensed text-sm px-4 py-2 bg-[#FF6B1A] text-[#0A0706] rounded text-center tracking-wider hover:bg-[#FFB800] transition">
               WHATSAPP
             </a>
@@ -586,24 +604,24 @@
 
       <div>
         <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">NOMBRE *</label>
-        <input type="text" id="nombre" required placeholder="Tu nombre" class="form-input w-full px-4 py-3 rounded" />
+        <input type="text" id="nombre" required placeholder="Tu nombre" autocomplete="name" class="form-input w-full px-4 py-3 rounded" />
       </div>
 
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">CORREO</label>
-          <input type="email" id="email" placeholder="tu@correo.com" class="form-input w-full px-4 py-3 rounded" />
+          <input type="email" id="email" placeholder="tu@correo.com" autocomplete="email" inputmode="email" class="form-input w-full px-4 py-3 rounded" />
         </div>
         <div>
           <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">TELÉFONO</label>
-          <input type="tel" id="telefono" placeholder="55 1234 5678" class="form-input w-full px-4 py-3 rounded" />
+          <input type="tel" id="telefono" placeholder="55 1234 5678" autocomplete="tel" inputmode="tel" class="form-input w-full px-4 py-3 rounded" />
         </div>
       </div>
 
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">PERSONAS *</label>
-          <input type="number" id="personas" min="1" max="50" required placeholder="¿Cuántos?" class="form-input w-full px-4 py-3 rounded" />
+          <input type="number" id="personas" min="1" max="50" required placeholder="¿Cuántos?" inputmode="numeric" class="form-input w-full px-4 py-3 rounded" />
         </div>
         <div>
           <label class="font-condensed text-[#FFB800] tracking-widest text-xs mb-2 block">SUCURSAL *</label>
@@ -658,7 +676,7 @@
     <div class="grid sm:grid-cols-3 gap-6 text-center sm:text-left mb-8">
       <div>
         <p class="font-condensed text-[#FFB800] tracking-widest text-sm mb-3">CONTACTO</p>
-        <a href="https://wa.me/525510699414" class="block text-[#F5E6C8]/80 hover:text-[#FF6B1A] transition text-sm">📱 55 1069 9414</a>
+        <a href="tel:+525510699414" class="block text-[#F5E6C8]/80 hover:text-[#FF6B1A] transition text-sm">📱 55 1069 9414</a>
         <a href="mailto:elagavearandas@gmail.com" class="block text-[#F5E6C8]/80 hover:text-[#FF6B1A] transition text-sm break-all">elagavearandas@gmail.com</a>
       </div>
       <div>
@@ -691,17 +709,46 @@
   // Año dinámico
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Horario "hoy" dinámico
-  (function setHoyHorario() {
+  // Determina si el restaurante está abierto ahora
+  function isOpen() {
+    const now = new Date();
+    const d = now.getDay(); // 0=Dom, 1=Lun...6=Sab
+    const t = now.getHours() * 60 + now.getMinutes();
+    const open = 600; // 10:00am en minutos
+    // Madrugada Sab o Dom (herencia del cierre tardío Vie/Sab): 0-2am
+    if ((d === 6 || d === 0) && t < 120) return true;
+    if (t < open) return false;
+    if (d === 0) return t < 1320; // Dom cierra 10pm
+    if (d >= 1 && d <= 4) return t < 1380; // Lun-Jue cierra 11pm
+    return true; // Vie y Sab desde 10am hasta madrugada
+  }
+
+  // Horario "hoy" y estado abierto/cerrado dinámico
+  (function setHoyStatus() {
     const dia = new Date().getDay();
-    let texto = '10am – 11pm';
-    if (dia === 5 || dia === 6) texto = '10am – 2am';
-    else if (dia === 0) texto = '10am – 10pm';
-    document.getElementById('hoy-horario').textContent = texto;
+    let horario = '10am – 11pm';
+    if (dia === 5 || dia === 6) horario = '10am – 2am';
+    else if (dia === 0) horario = '10am – 10pm';
+    document.getElementById('hoy-horario').textContent = horario;
+
+    const statusEl = document.getElementById('hoy-status');
+    if (isOpen()) {
+      statusEl.textContent = '● ABIERTO AHORA';
+      statusEl.style.color = '#4ade80';
+    } else {
+      statusEl.textContent = '● CERRADO';
+      statusEl.style.color = '#8A7866';
+    }
   })();
 
-  // Fecha mínima en form = hoy
-  document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+  // Fecha mínima = hoy, máxima = 3 meses
+  (function setFechaLimites() {
+    const today = new Date();
+    document.getElementById('fecha').min = today.toISOString().split('T')[0];
+    const max = new Date(today);
+    max.setMonth(max.getMonth() + 3);
+    document.getElementById('fecha').max = max.toISOString().split('T')[0];
+  })();
 
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
@@ -715,13 +762,16 @@
   // Hamburger menu
   function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
-    const isOpen = menu.style.display !== 'none';
-    menu.style.display = isOpen ? 'none' : 'block';
-    document.getElementById('icon-open').style.display  = isOpen ? '' : 'none';
-    document.getElementById('icon-close').style.display = isOpen ? 'none' : '';
+    const btn  = document.getElementById('menu-btn');
+    const open = menu.style.display !== 'none';
+    menu.style.display = open ? 'none' : 'block';
+    btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    document.getElementById('icon-open').style.display  = open ? '' : 'none';
+    document.getElementById('icon-close').style.display = open ? 'none' : '';
   }
   function closeMobileMenu() {
     document.getElementById('mobile-menu').style.display = 'none';
+    document.getElementById('menu-btn').setAttribute('aria-expanded', 'false');
     document.getElementById('icon-open').style.display  = '';
     document.getElementById('icon-close').style.display = 'none';
   }
@@ -773,6 +823,7 @@
     e.preventDefault();
     const btn = document.querySelector('#reservaForm button[type="submit"]');
     const originalText = btn.textContent;
+    const originalBg   = btn.style.background;
     btn.textContent = 'ENVIANDO…';
     btn.disabled = true;
 
@@ -808,7 +859,15 @@
 
     window.open(`https://wa.me/525510699414?text=${encodeURIComponent(mensaje)}`, '_blank');
 
-    setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+    btn.textContent = '✓ SOLICITUD ENVIADA';
+    btn.style.background = '#22c55e';
+    btn.style.color = '#0A0706';
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = originalBg;
+      btn.style.color = '';
+      btn.disabled = false;
+    }, 5000);
   }
 
   // Scroll to top visibility
