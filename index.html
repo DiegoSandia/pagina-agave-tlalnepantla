@@ -34,7 +34,7 @@
   "servesCuisine": "Mexican",
   "priceRange": "$$",
   "image": "https://pagina-agave.vercel.app/assets/logo-agave.png",
-  "openingHours": ["Mo-Th 10:00-23:00", "Fr-Sa 10:00-02:00", "Su 10:00-22:00"],
+  "openingHours": ["Tu-Su 10:00-03:00", "Mo-Su 10:00-03:00"],
   "currenciesAccepted": "MXN",
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -577,19 +577,19 @@
 
     <!-- Horarios -->
     <div id="horarios" class="mt-10 bg-card rounded-lg p-6 sm:p-8 reveal">
-      <h3 class="font-condensed text-2xl text-[#FFB800] glow-amarillo-soft tracking-widest mb-5 text-center">HORARIOS</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-        <div>
-          <p class="font-condensed text-[#FF6B1A] tracking-wider text-sm mb-1">LUNES — JUEVES</p>
-          <p class="text-[#F5E6C8]">10:00 AM — 11:00 PM</p>
+      <h3 class="font-condensed text-2xl text-[#FFB800] glow-amarillo-soft tracking-widest mb-6 text-center">HORARIOS</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-center">
+        <div class="border border-[#4A2C1A]/60 rounded-lg p-4">
+          <p class="font-condensed text-[#FFB800] tracking-widest text-sm mb-1">ARBOLEDAS</p>
+          <p class="font-condensed text-[#FF6B1A] tracking-wider text-xs mb-3">MARTES — DOMINGO</p>
+          <p class="text-[#F5E6C8] text-lg font-semibold">10:00 AM — 3:00 AM</p>
+          <p class="text-[#8A7866] text-xs mt-2">* Cerrado los lunes</p>
         </div>
-        <div class="sm:border-x border-[#4A2C1A] sm:px-4">
-          <p class="font-condensed text-[#FF6B1A] tracking-wider text-sm mb-1">VIERNES — SÁBADO</p>
-          <p class="text-[#F5E6C8]">10:00 AM — 2:00 AM</p>
-        </div>
-        <div>
-          <p class="font-condensed text-[#FF6B1A] tracking-wider text-sm mb-1">DOMINGO</p>
-          <p class="text-[#F5E6C8]">10:00 AM — 10:00 PM</p>
+        <div class="border border-[#4A2C1A]/60 rounded-lg p-4">
+          <p class="font-condensed text-[#FFB800] tracking-widest text-sm mb-1">TLALNEPANTLA CENTRO</p>
+          <p class="font-condensed text-[#FF6B1A] tracking-wider text-xs mb-3">LUNES — DOMINGO</p>
+          <p class="text-[#F5E6C8] text-lg font-semibold">10:00 AM — 3:00 AM</p>
+          <p class="text-[#8A7866] text-xs mt-2">Abierto todos los días</p>
         </div>
       </div>
       <p class="text-center text-[#8A7866] text-xs mt-5">Desayunos: 10:00 — 14:00 hrs · Cantarito chico de cortesía · Pulque 2x1 · Copeo 2x1 — todos los días</p>
@@ -757,27 +757,26 @@
   // Año dinámico
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Determina si el restaurante está abierto ahora
+  // Determina si al menos una sucursal está abierta ahora
+  // Tlalnepantla: Lun-Dom 10am-3am | Arboledas: Mar-Dom 10am-3am
   function isOpen() {
     const now = new Date();
     const d = now.getDay(); // 0=Dom, 1=Lun...6=Sab
     const t = now.getHours() * 60 + now.getMinutes();
-    const open = 600; // 10:00am en minutos
-    // Madrugada Sab o Dom (herencia del cierre tardío Vie/Sab): 0-2am
-    if ((d === 6 || d === 0) && t < 120) return true;
-    if (t < open) return false;
-    if (d === 0) return t < 1320; // Dom cierra 10pm
-    if (d >= 1 && d <= 4) return t < 1380; // Lun-Jue cierra 11pm
-    return true; // Vie y Sab desde 10am hasta madrugada
+    // Madrugada 0-3am: sigue abierto del día anterior
+    if (t < 180) return true;
+    // Entre 3am y 10am: cerrado
+    if (t < 600) return false;
+    // Desde 10am: Tlalnepantla abierta todos los días, Arboledas excepto lunes
+    return true;
   }
 
   // Horario "hoy" y estado abierto/cerrado dinámico
   (function setHoyStatus() {
-    const dia = new Date().getDay();
-    let horario = '10am – 11pm';
-    if (dia === 5 || dia === 6) horario = '10am – 2am';
-    else if (dia === 0) horario = '10am – 10pm';
-    document.getElementById('hoy-horario').textContent = horario;
+    const dia = new Date().getDay(); // 1=Lun
+    document.getElementById('hoy-horario').textContent = dia === 1
+      ? '10am – 3am (solo Centro)'
+      : '10am – 3am';
 
     const statusEl = document.getElementById('hoy-status');
     if (isOpen()) {
