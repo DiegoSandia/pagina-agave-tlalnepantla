@@ -189,6 +189,94 @@
   }
   .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
 
+  /* Scroll progress bar */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; z-index: 200;
+    height: 3px; width: 0%;
+    background: linear-gradient(90deg, #E53E0C, #FF6B1A, #FFB800);
+    pointer-events: none;
+  }
+
+  /* Card shimmer al revelar */
+  .bg-card { position: relative; overflow: hidden; }
+  .bg-card::after {
+    content: ''; pointer-events: none;
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgba(255,184,0,0.07) 50%, transparent 65%);
+    transform: translateX(-200%) skewX(-15deg);
+  }
+  .bg-card.reveal.in::after {
+    animation: shimmer-card 1s ease forwards 0.35s;
+  }
+  @keyframes shimmer-card {
+    to { transform: translateX(250%) skewX(-15deg); }
+  }
+
+  /* Estrellas de reseñas */
+  .star { color: #2a1810; display: inline-block; transition: color 0.3s, text-shadow 0.3s; }
+  .star.lit { color: #FFB800; text-shadow: 0 0 8px rgba(255,184,0,0.8); }
+
+  /* Liquid fill en botones */
+  .btn-liquid { position: relative; overflow: hidden; }
+  .btn-liquid::before {
+    content: '';
+    position: absolute; bottom: -101%; left: 0; right: 0; height: 100%;
+    background: rgba(255,255,255,0.13);
+    transition: bottom 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-liquid:hover::before,
+  .btn-liquid:active::before { bottom: 0; }
+
+  /* Section title flicker */
+  .section-title-flicker { opacity: 0; }
+  .section-title-flicker.flickered {
+    animation: section-flicker 1.2s ease forwards;
+  }
+  @keyframes section-flicker {
+    0%   { opacity: 0; }
+    35%  { opacity: 0.9; }
+    38%  { opacity: 0.2; }
+    42%  { opacity: 0.95; text-shadow: 0 0 25px rgba(255,184,0,0.4); }
+    45%  { opacity: 0.5; }
+    50%  { opacity: 1; }
+    100% { opacity: 1; }
+  }
+
+  /* Wave dividers entre secciones */
+  .wave-divider { display: block; width: 100%; overflow: hidden; height: 44px; line-height: 0; }
+  .wave-divider svg { width: 100%; height: 100%; }
+
+  /* Promo toast */
+  .promo-toast {
+    position: fixed; bottom: 90px; left: 12px; right: 12px; z-index: 60;
+    animation: toast-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @media (min-width: 640px) {
+    .promo-toast { left: auto; right: 90px; max-width: 290px; bottom: 24px; }
+  }
+  @keyframes toast-in {
+    from { transform: translateY(80px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  /* Canvas embers */
+  #embers-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 3;
+  }
+
+  /* Parallax */
+  .parallax-img { will-change: transform; }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .section-title-flicker, .section-title-flicker.flickered { opacity: 1 !important; animation: none !important; }
+    .bg-card.reveal.in::after { animation: none !important; }
+    .parallax-img { will-change: auto; transform: none !important; }
+    .neon-flicker, .pulse-neon { animation: none !important; }
+  }
+
   /* Botón scroll to top */
   .scroll-top {
     position: fixed; bottom: 92px; right: 26px; z-index: 50;
@@ -203,6 +291,8 @@
 </head>
 
 <body>
+
+<div id="scroll-progress" class="scroll-progress"></div>
 
 <!-- NAVBAR -->
 <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-[#4A2C1A]/40">
@@ -250,6 +340,9 @@
   <!-- Overlay oscuro sobre el video -->
   <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(10,7,6,0.55) 0%, rgba(10,7,6,0.30) 50%, rgba(10,7,6,0.75) 100%);"></div>
 
+  <!-- Embers / chispas flotantes -->
+  <canvas id="embers-canvas"></canvas>
+
   <div class="w-full max-w-4xl mx-auto text-center relative z-10">
     <img src="assets/logo-agave.png" alt="El Agave Birria & Cantaritos" class="h-28 sm:h-48 md:h-60 mx-auto mb-4 sm:mb-6" style="object-fit: contain; filter: drop-shadow(0 0 30px rgba(255, 107, 26, 0.4));" fetchpriority="high" loading="eager" />
 
@@ -257,7 +350,7 @@
       PRENDE<br/>LA NOCHE
     </h1>
 
-    <p class="font-condensed text-base sm:text-xl md:text-2xl text-[#FF6B1A] glow-amarillo-soft mb-3 tracking-widest">
+    <p id="hero-subtitle" class="font-condensed text-base sm:text-xl md:text-2xl text-[#FF6B1A] glow-amarillo-soft mb-3 tracking-widest" style="opacity:0">
       BIRRIA & CANTARITOS
     </p>
 
@@ -332,18 +425,20 @@
   </div>
 </section>
 
+<div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1440 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,22 C240,38 480,6 720,22 C960,38 1200,6 1440,22" fill="none" stroke="rgba(255,107,26,0.22)" stroke-width="1.5"/><path d="M0,28 C240,14 480,40 720,28 C960,14 1200,40 1440,28" fill="none" stroke="rgba(255,184,0,0.1)" stroke-width="1"/></svg></div>
+
 <!-- ESPECIALIDADES -->
 <section class="py-16 sm:py-24 px-4 bg-madera">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-12 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">LO QUE NOS HACE</p>
-      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider">ESPECIALIDAD DE LA CASA</h2>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider section-title-flicker">ESPECIALIDAD DE LA CASA</h2>
     </div>
 
     <div class="grid md:grid-cols-2 gap-6">
       <div class="bg-card rounded-lg overflow-hidden reveal">
         <div class="aspect-[4/3] overflow-hidden">
-          <img src="assets/birria.png" alt="Birria estilo Jalisco" class="w-full h-full object-cover" style="transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+          <img src="assets/birria.png" alt="Birria estilo Jalisco" class="w-full h-full object-cover parallax-img" style="transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
         </div>
         <div class="p-8">
           <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-3">EL HÉROE</p>
@@ -359,7 +454,7 @@
 
       <div class="bg-card rounded-lg overflow-hidden reveal">
         <div class="aspect-[4/3] overflow-hidden">
-          <img src="assets/cantarito.png" alt="Cantarito El Agave" class="w-full h-full object-cover" style="transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+          <img src="assets/cantarito.png" alt="Cantarito El Agave" class="w-full h-full object-cover parallax-img" style="transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
         </div>
         <div class="p-8">
           <p class="font-condensed text-[#FFB800] glow-amarillo-soft tracking-widest text-sm mb-3">EL QUE PRENDE LA MESA</p>
@@ -378,12 +473,14 @@
   </div>
 </section>
 
+<div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1440 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,22 C240,6 480,38 720,22 C960,6 1200,38 1440,22" fill="none" stroke="rgba(255,107,26,0.22)" stroke-width="1.5"/><path d="M0,16 C240,30 480,4 720,16 C960,30 1200,4 1440,16" fill="none" stroke="rgba(255,184,0,0.1)" stroke-width="1"/></svg></div>
+
 <!-- RESEÑAS -->
 <section id="resenas" class="py-16 sm:py-20 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-10 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">LO QUE DICEN</p>
-      <h2 class="font-condensed text-4xl sm:text-5xl text-[#F5E6C8] tracking-wider">NUESTROS CLIENTES</h2>
+      <h2 class="font-condensed text-4xl sm:text-5xl text-[#F5E6C8] tracking-wider section-title-flicker">NUESTROS CLIENTES</h2>
       <div class="inline-flex items-center gap-2 mt-4 bg-[#FFB800]/10 border border-[#FFB800]/30 rounded-full px-5 py-2">
         <span class="text-[#FFB800] font-semibold">★ 4.4</span>
         <span class="text-[#8A7866] text-xs">274 reseñas en Google</span>
@@ -392,7 +489,7 @@
     <div class="grid md:grid-cols-3 gap-5">
 
       <div class="bg-card rounded-lg p-6 reveal">
-        <p class="text-[#FFB800] text-base mb-3">★★★★★</p>
+        <p class="stars-animate text-base mb-3"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></p>
         <p class="text-[#F5E6C8]/80 text-sm leading-relaxed mb-5">"La birria está brutal, mejor que en muchos lugares del estado. Los cantaritos en barro le dan otro nivel al sabor."</p>
         <div class="flex items-center gap-3">
           <div class="w-9 h-9 rounded-full bg-[#FF6B1A]/20 flex items-center justify-center font-condensed text-[#FF6B1A] text-sm flex-shrink-0">MG</div>
@@ -404,7 +501,7 @@
       </div>
 
       <div class="bg-card rounded-lg p-6 reveal">
-        <p class="text-[#FFB800] text-base mb-3">★★★★★</p>
+        <p class="stars-animate text-base mb-3"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></p>
         <p class="text-[#F5E6C8]/80 text-sm leading-relaxed mb-5">"Fuimos a celebrar el cumpleaños de mi mamá y nos atendieron increíble. La cazuela de 5L valió cada centavo."</p>
         <div class="flex items-center gap-3">
           <div class="w-9 h-9 rounded-full bg-[#FF6B1A]/20 flex items-center justify-center font-condensed text-[#FF6B1A] text-sm flex-shrink-0">CP</div>
@@ -416,7 +513,7 @@
       </div>
 
       <div class="bg-card rounded-lg p-6 reveal">
-        <p class="text-[#FFB800] text-base mb-3">★★★★★</p>
+        <p class="stars-animate text-base mb-3"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></p>
         <p class="text-[#F5E6C8]/80 text-sm leading-relaxed mb-5">"El consomé te calienta el alma. Ya somos clientes fijos de Arboledas, cada fin de semana caemos ahí."</p>
         <div class="flex items-center gap-3">
           <div class="w-9 h-9 rounded-full bg-[#FF6B1A]/20 flex items-center justify-center font-condensed text-[#FF6B1A] text-sm flex-shrink-0">AM</div>
@@ -456,7 +553,7 @@
     <!-- Menú completo: galería de páginas -->
     <div class="text-center mb-8 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">MENÚ COMPLETO</p>
-      <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] tracking-wider">TODOS LOS PRECIOS</h3>
+      <h3 class="font-condensed text-3xl sm:text-4xl text-[#F5E6C8] tracking-wider section-title-flicker">TODOS LOS PRECIOS</h3>
       <p class="text-[#8A7866] text-sm mt-2">Toca cualquier página para verla en grande</p>
     </div>
 
@@ -498,12 +595,14 @@
   <span id="lightbox-counter" class="absolute bottom-4 font-condensed text-[#8A7866] text-sm tracking-widest" style="left:50%;transform:translateX(-50%)"></span>
 </div>
 
+<div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1440 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,22 C240,38 480,6 720,22 C960,38 1200,6 1440,22" fill="none" stroke="rgba(255,107,26,0.22)" stroke-width="1.5"/><path d="M0,28 C240,14 480,40 720,28 C960,14 1200,40 1440,28" fill="none" stroke="rgba(255,184,0,0.1)" stroke-width="1"/></svg></div>
+
 <!-- SUCURSALES -->
 <section id="sucursales" class="py-16 sm:py-24 px-4 bg-madera">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">DOS UBICACIONES</p>
-      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider">¿DÓNDE CAEMOS?</h2>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider section-title-flicker">¿DÓNDE CAEMOS?</h2>
     </div>
 
     <div class="grid md:grid-cols-2 gap-6">
@@ -602,7 +701,7 @@
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-12 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">MÁS QUE UNA COMIDA</p>
-      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider">EVENTOS Y GRUPOS</h2>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider section-title-flicker">EVENTOS Y GRUPOS</h2>
       <p class="text-[#8A7866] max-w-md mx-auto mt-3">Celebra con todos los tuyos. Paquetes especiales para grupos, cazuelas compartidas y atención personalizada.</p>
     </div>
 
@@ -632,19 +731,21 @@
       <p class="text-[#8A7866] text-sm mb-5">¿Tienes una fecha especial? Escríbenos y lo organizamos.</p>
       <a href="https://wa.me/525510699414?text=Hola%20El%20Agave%2C%20quiero%20reservar%20para%20un%20evento%20o%20grupo"
          target="_blank" rel="noopener"
-         class="font-condensed text-lg px-10 py-4 bg-[#FFB800] text-[#0A0706] rounded tracking-widest hover:scale-105 transition inline-block pulse-neon">
+         class="font-condensed text-lg px-10 py-4 bg-[#FFB800] text-[#0A0706] rounded tracking-widest hover:scale-105 transition inline-block pulse-neon btn-liquid">
         RESERVAR PARA EVENTO
       </a>
     </div>
   </div>
 </section>
 
+<div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1440 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,22 C240,6 480,38 720,22 C960,6 1200,38 1440,22" fill="none" stroke="rgba(255,107,26,0.22)" stroke-width="1.5"/><path d="M0,16 C240,30 480,4 720,16 C960,30 1200,4 1440,16" fill="none" stroke="rgba(255,184,0,0.1)" stroke-width="1"/></svg></div>
+
 <!-- RESERVAR -->
 <section id="reservar" class="py-16 sm:py-24 px-4">
   <div class="max-w-2xl mx-auto">
     <div class="text-center mb-10 reveal">
       <p class="font-condensed text-[#FF6B1A] tracking-widest mb-2">APARTA TU MESA</p>
-      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider mb-3">RESERVAR</h2>
+      <h2 class="font-condensed text-4xl sm:text-6xl text-[#F5E6C8] tracking-wider mb-3 section-title-flicker">RESERVAR</h2>
       <p class="text-[#8A7866] max-w-md mx-auto">Llena los datos y te mandamos tu solicitud por WhatsApp — el restaurante te confirma disponibilidad.</p>
     </div>
 
@@ -704,7 +805,7 @@
         </p>
       </div>
 
-      <button type="submit" class="font-condensed w-full text-lg px-8 py-4 bg-[#FF6B1A] text-[#0A0706] rounded tracking-widest pulse-neon hover:scale-[1.02] transition">
+      <button type="submit" class="font-condensed w-full text-lg px-8 py-4 bg-[#FF6B1A] text-[#0A0706] rounded tracking-widest pulse-neon hover:scale-[1.02] transition btn-liquid">
         ENVIAR SOLICITUD
       </button>
 
@@ -754,59 +855,56 @@
 
 
 <script>
-  // Año dinámico
+  // ── Año dinámico ──────────────────────────────────────────────
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Determina si al menos una sucursal está abierta ahora
-  // Tlalnepantla: Lun-Dom 10am-3am | Arboledas: Mar-Dom 10am-3am
+  // ── Abierto / cerrado ─────────────────────────────────────────
   function isOpen() {
-    const now = new Date();
-    const d = now.getDay(); // 0=Dom, 1=Lun...6=Sab
-    const t = now.getHours() * 60 + now.getMinutes();
-    // Madrugada 0-3am: sigue abierto del día anterior
-    if (t < 180) return true;
-    // Entre 3am y 10am: cerrado
-    if (t < 600) return false;
-    // Desde 10am: Tlalnepantla abierta todos los días, Arboledas excepto lunes
-    return true;
+    const t = new Date().getHours() * 60 + new Date().getMinutes();
+    if (t < 180) return true;   // 0–3am: herencia del cierre anterior
+    if (t < 600) return false;  // 3–10am: cerrado
+    return true;                // 10am en adelante: al menos Tlalnepantla
   }
-
-  // Horario "hoy" y estado abierto/cerrado dinámico
   (function setHoyStatus() {
-    const dia = new Date().getDay(); // 1=Lun
-    document.getElementById('hoy-horario').textContent = dia === 1
-      ? '10am – 3am (solo Centro)'
-      : '10am – 3am';
-
-    const statusEl = document.getElementById('hoy-status');
-    if (isOpen()) {
-      statusEl.textContent = '● ABIERTO AHORA';
-      statusEl.style.color = '#4ade80';
-    } else {
-      statusEl.textContent = '● CERRADO';
-      statusEl.style.color = '#8A7866';
-    }
+    const dia = new Date().getDay();
+    document.getElementById('hoy-horario').textContent = dia === 1 ? '10am – 3am (solo Centro)' : '10am – 3am';
+    const s = document.getElementById('hoy-status');
+    s.textContent = isOpen() ? '● ABIERTO AHORA' : '● CERRADO';
+    s.style.color  = isOpen() ? '#4ade80' : '#8A7866';
   })();
 
-  // Fecha mínima = hoy, máxima = 3 meses
-  (function setFechaLimites() {
+  // ── Fecha límites ─────────────────────────────────────────────
+  (function() {
     const today = new Date();
     document.getElementById('fecha').min = today.toISOString().split('T')[0];
-    const max = new Date(today);
-    max.setMonth(max.getMonth() + 3);
+    const max = new Date(today); max.setMonth(max.getMonth() + 3);
     document.getElementById('fecha').max = max.toISOString().split('T')[0];
   })();
 
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.15 });
-  reveals.forEach(r => obs.observe(r));
+  // ── Scroll: progress + scroll-top + parallax ──────────────────
+  const progressBar = document.getElementById('scroll-progress');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Hamburger menu
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    progressBar.style.width = pct + '%';
+    document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 400);
+    if (!reduceMotion) {
+      document.querySelectorAll('.parallax-img').forEach(img => {
+        const rect = img.getBoundingClientRect();
+        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.07;
+        img.style.transform = `translateY(${offset}px)`;
+      });
+    }
+  }, { passive: true });
+
+  // ── Scroll reveal ─────────────────────────────────────────────
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+  // ── Hamburger ─────────────────────────────────────────────────
   function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     const btn  = document.getElementById('menu-btn');
@@ -823,7 +921,7 @@
     document.getElementById('icon-close').style.display = 'none';
   }
 
-  // Lightbox con navegación prev/next
+  // ── Lightbox ──────────────────────────────────────────────────
   const menuImages = [
     { src: 'assets/menu-pagina-1.png', alt: 'Para desayunar' },
     { src: 'assets/menu-pagina-2.png', alt: 'Para comer' },
@@ -832,7 +930,6 @@
     { src: 'assets/menu-pagina-5.png', alt: 'Licores' },
   ];
   let currentLightboxIndex = 0;
-
   function openLightbox(index) {
     currentLightboxIndex = index;
     const { src, alt } = menuImages[index];
@@ -842,17 +939,9 @@
     document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-  function navigateLightbox(dir) {
-    openLightbox((currentLightboxIndex + dir + menuImages.length) % menuImages.length);
-  }
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function handleLightboxClick(e) {
-    if (e.target === document.getElementById('lightbox')) closeLightbox();
-  }
-
+  function navigateLightbox(dir) { openLightbox((currentLightboxIndex + dir + menuImages.length) % menuImages.length); }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+  function handleLightboxClick(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
   document.addEventListener('keydown', (e) => {
     if (!document.getElementById('lightbox').classList.contains('open')) return;
     if (e.key === 'Escape') closeLightbox();
@@ -860,69 +949,32 @@
     if (e.key === 'ArrowRight') navigateLightbox(1);
   });
 
-  // Supabase
+  // ── Supabase + form ───────────────────────────────────────────
   const SUPA_URL = 'https://nujtzcyfvxyyxisvylch.supabase.co';
   const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51anR6Y3lmdnh5eXhpc3Z5bGNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNDk3NTksImV4cCI6MjA5NTgyNTc1OX0.CdOd8YTub12bA3U3IUWz9Zxjrwq2xa2I59TQNCqHrjA';
   const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-  // Enviar reservación: guarda en BD y abre WhatsApp
   async function enviarWhatsApp(e) {
     e.preventDefault();
     const btn = document.querySelector('#reservaForm button[type="submit"]');
-    const originalText = btn.textContent;
-    const originalBg   = btn.style.background;
-    btn.textContent = 'ENVIANDO…';
-    btn.disabled = true;
-
-    const nombre      = document.getElementById('nombre').value.trim();
-    const email       = document.getElementById('email').value.trim();
-    const telefono    = document.getElementById('telefono').value.trim();
-    const personas    = document.getElementById('personas').value;
-    const sucursal    = document.getElementById('sucursal').value;
-    const fecha       = document.getElementById('fecha').value;
-    const hora        = document.getElementById('hora').value;
-    const comentarios = document.getElementById('comentarios').value.trim();
-
-    supa.from('reservaciones').insert({
-      nombre,
-      email:       email       || null,
-      telefono:    telefono    || null,
-      personas:    parseInt(personas),
-      sucursal, fecha, hora,
-      comentarios: comentarios || null
-    }).then(({ error }) => {
-      if (error) console.warn('No se pudo guardar la reservación:', error.message);
-    });
-
-    const [y, m, d] = fecha.split('-');
-    const fechaBonita = `${d}/${m}/${y}`;
-    let mensaje = `Hola El Agave! Quiero reservar una mesa:\n\n`;
-    mensaje += `👤 *Nombre:* ${nombre}\n`;
-    mensaje += `👥 *Personas:* ${personas}\n`;
-    mensaje += `📍 *Sucursal:* ${sucursal}\n`;
-    mensaje += `📅 *Fecha:* ${fechaBonita}\n`;
-    mensaje += `🕐 *Hora:* ${hora}`;
-    if (comentarios) mensaje += `\n💬 *Comentarios:* ${comentarios}`;
-
-    window.open(`https://wa.me/525510699414?text=${encodeURIComponent(mensaje)}`, '_blank');
-
-    btn.textContent = '✓ SOLICITUD ENVIADA';
-    btn.style.background = '#22c55e';
-    btn.style.color = '#0A0706';
-    setTimeout(() => {
-      btn.textContent = originalText;
-      btn.style.background = originalBg;
-      btn.style.color = '';
-      btn.disabled = false;
-    }, 5000);
+    const origText = btn.textContent, origBg = btn.style.background;
+    btn.textContent = 'ENVIANDO…'; btn.disabled = true;
+    const nombre=document.getElementById('nombre').value.trim(), email=document.getElementById('email').value.trim(),
+          telefono=document.getElementById('telefono').value.trim(), personas=document.getElementById('personas').value,
+          sucursal=document.getElementById('sucursal').value, fecha=document.getElementById('fecha').value,
+          hora=document.getElementById('hora').value, comentarios=document.getElementById('comentarios').value.trim();
+    supa.from('reservaciones').insert({ nombre, email:email||null, telefono:telefono||null,
+      personas:parseInt(personas), sucursal, fecha, hora, comentarios:comentarios||null })
+      .then(({ error }) => { if (error) console.warn('Supabase:', error.message); });
+    const [y,m,d] = fecha.split('-');
+    let msg = `Hola El Agave! Quiero reservar una mesa:\n\n👤 *Nombre:* ${nombre}\n👥 *Personas:* ${personas}\n📍 *Sucursal:* ${sucursal}\n📅 *Fecha:* ${d}/${m}/${y}\n🕐 *Hora:* ${hora}`;
+    if (comentarios) msg += `\n💬 *Comentarios:* ${comentarios}`;
+    window.open(`https://wa.me/525510699414?text=${encodeURIComponent(msg)}`, '_blank');
+    btn.textContent = '✓ SOLICITUD ENVIADA'; btn.style.background = '#22c55e'; btn.style.color = '#0A0706';
+    setTimeout(() => { btn.textContent = origText; btn.style.background = origBg; btn.style.color = ''; btn.disabled = false; }, 5000);
   }
 
-  // Scroll to top visibility
-  window.addEventListener('scroll', () => {
-    document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 400);
-  });
-
-  // Nav activa al scrollear
+  // ── Nav activa ────────────────────────────────────────────────
   const navLinks = document.querySelectorAll('nav a[href^="#"]');
   const secObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -934,6 +986,82 @@
     });
   }, { rootMargin: '-20% 0px -65% 0px' });
   document.querySelectorAll('section[id]').forEach(s => secObs.observe(s));
+
+  // ── Typewriter: subtítulo hero ────────────────────────────────
+  (function() {
+    const el = document.getElementById('hero-subtitle');
+    if (!el || reduceMotion) { if (el) el.style.opacity = '1'; return; }
+    const text = el.textContent.trim();
+    el.textContent = '';
+    el.style.opacity = '1';
+    let i = 0;
+    setTimeout(() => {
+      const t = setInterval(() => { el.textContent += text[i++]; if (i >= text.length) clearInterval(t); }, 70);
+    }, 500);
+  })();
+
+  // ── Section title flicker ─────────────────────────────────────
+  if (!reduceMotion) {
+    const flickerObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('flickered'); flickerObs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.section-title-flicker').forEach(el => flickerObs.observe(el));
+  } else {
+    document.querySelectorAll('.section-title-flicker').forEach(el => el.style.opacity = '1');
+  }
+
+  // ── Stars animation ───────────────────────────────────────────
+  const starObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.star').forEach((s, i) => setTimeout(() => s.classList.add('lit'), i * 140));
+        starObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.stars-animate').forEach(el => starObs.observe(el));
+
+  // ── Embers canvas ─────────────────────────────────────────────
+  (function initEmbers() {
+    const canvas = document.getElementById('embers-canvas');
+    if (!canvas || reduceMotion) return;
+    const ctx = canvas.getContext('2d');
+    const COUNT = window.innerWidth < 640 ? 16 : 26;
+    function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+    const embers = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * canvas.width,
+      y: canvas.height * (0.4 + Math.random() * 0.6),
+      r: Math.random() * 1.8 + 0.4,
+      speed: Math.random() * 0.55 + 0.15,
+      drift: (Math.random() - 0.5) * 0.35,
+      opacity: Math.random() * 0.55 + 0.15,
+      color: Math.random() > 0.5 ? '#FFB800' : '#FF6B1A',
+    }));
+    (function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      embers.forEach(e => {
+        ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+        ctx.fillStyle = e.color; ctx.globalAlpha = e.opacity; ctx.fill();
+        e.y -= e.speed; e.x += e.drift; e.opacity -= 0.0015;
+        if (e.y < -10 || e.opacity <= 0) {
+          e.x = Math.random() * canvas.width; e.y = canvas.height + 5;
+          e.opacity = Math.random() * 0.55 + 0.15; e.speed = Math.random() * 0.55 + 0.15;
+        }
+      });
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    })();
+  })();
+
+  // ── Promo toast (20s delay) ───────────────────────────────────
+  setTimeout(() => {
+    const toast = document.getElementById('promo-toast');
+    if (toast) { toast.style.display = 'block'; setTimeout(() => { toast.style.display = 'none'; }, 8000); }
+  }, 20000);
 </script>
 
 <!-- WhatsApp flotante -->
@@ -943,6 +1071,16 @@
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
   </svg>
 </a>
+
+<!-- Promo toast -->
+<div id="promo-toast" class="promo-toast" style="display:none;">
+  <div class="bg-[#120a04] border border-[#FFB800]/50 rounded-xl p-4 shadow-2xl relative">
+    <button onclick="document.getElementById('promo-toast').style.display='none'" class="absolute top-2 right-3 text-[#8A7866] hover:text-[#F5E6C8] text-xl leading-none">×</button>
+    <p class="font-condensed text-[#FFB800] text-base tracking-wider mb-1">⚡ PROMOS DE HOY</p>
+    <p class="text-[#F5E6C8]/80 text-sm leading-relaxed">🏺 Cantarito chico de cortesía<br/>🍶 Pulque 2x1 · 🥃 Copeo 2x1</p>
+    <a href="#reservar" onclick="document.getElementById('promo-toast').style.display='none'" class="font-condensed text-xs text-[#FF6B1A] hover:text-[#FFB800] transition mt-3 block tracking-wider">RESERVAR MESA →</a>
+  </div>
+</div>
 
 <!-- Scroll to top -->
 <button id="scroll-top" class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
